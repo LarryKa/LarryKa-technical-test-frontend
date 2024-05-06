@@ -1,1 +1,36 @@
-<p>detail works!</p>
+<div class="container" *ngIf="show">    
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Información de Contacto</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Nombre:</strong> {{ contact.name }}</p>
+                <p><strong>Ciudad:</strong> {{ contact.surname }}</p>
+                <h6 class="mb-3">Direcciones:</h6>
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let address of this.contact.addresses">{{ address.address }}</li>                  
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6 class="mb-3">Teléfonos:</h6>
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let phone of this.contact.phones">{{ phone.phone }}</li>                  
+                </ul>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <h6 class="mb-3">Correos Electrónicos:</h6>
+                <p *ngFor="let email of this.contact.emails">{{ email.email }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
