@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { ContactServiceService } from '../services/contact-service.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -61,9 +62,22 @@ export class AddComponent implements OnInit{
       this._contactServiceService.addContact(this.contactForm.value).subscribe({
         next: ({status, code, message, contact}) => {
           if( status == 'success' && code == 200 ){
-            alert(message);
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: message,
+              showConfirmButton: false,
+              timer: 1500
+            });
             this.contactForm.reset();
           }
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Asegurate de agregar al menos un email, un número de telefono y dirección",            
+          });
         }
       })
     }
