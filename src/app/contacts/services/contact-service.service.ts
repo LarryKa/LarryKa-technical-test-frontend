@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { GetContacts } from '../interfaces/get-contact.interface';
+import { GetContactByID } from '../interfaces/get-contact-by-id.interface';
 
 
 @Injectable({
@@ -17,6 +18,10 @@ export class ContactServiceService {
   
   getContacts(word:string, page:number):Observable<GetContacts>{
     return this._http.get<GetContacts>(`${this.url}/api/search/${word}?page=${page}`);
+  }
+
+  getContactById(contact_id:number):Observable<GetContactByID>{
+    return this._http.get<GetContactByID>(`${this.url}/api/contact/${contact_id}`);
   }
 
 }

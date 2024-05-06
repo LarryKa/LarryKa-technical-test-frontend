@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ContactServiceService } from '../services/contact-service.service';
 import { Contact } from '../interfaces/get-contact.interface';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class PrincipalComponent {
   total!:number;
 
   constructor(
-    public _contactServiceService:ContactServiceService
+    public _contactServiceService:ContactServiceService,
+    private _router: Router
   ){
     this.getContacts();
   }
@@ -61,8 +63,8 @@ export class PrincipalComponent {
 
   }
 
-  verDetalle(contact_id:number){
-
+  verDetalle(contact_id:number){    
+    this._router.navigate([`/contacts/detail/${contact_id}`]);
   }
 
   add(){
