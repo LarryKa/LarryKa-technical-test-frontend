@@ -1,0 +1,21 @@
+/* Estilos CSS personalizados */
+.table {
+    width: 100%;
+}
+
+.table th,
+.table td {
+    text-align: center;
+}
+
+.table th {
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-striped tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
