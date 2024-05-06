@@ -6,6 +6,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
 import { DetailComponent } from './detail/detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DetailComponent } from './detail/detail.component';
   ],
   imports: [
     CommonModule,
-    ContactsRoutingModule
+    ContactsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class ContactsModule { }
