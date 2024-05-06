@@ -68,6 +68,6 @@ export class PrincipalComponent {
   }
 
   add(){
-
+    this._router.navigate([`/contacts/add`]);
   }
 }

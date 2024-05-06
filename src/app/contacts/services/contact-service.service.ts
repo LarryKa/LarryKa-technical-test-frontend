@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { GetContacts } from '../interfaces/get-contact.interface';
 import { GetContactByID } from '../interfaces/get-contact-by-id.interface';
+import { AddContact } from '../interfaces/add-contact.interface';
 
 
 @Injectable({
@@ -22,6 +23,10 @@ export class ContactServiceService {
 
   getContactById(contact_id:number):Observable<GetContactByID>{
     return this._http.get<GetContactByID>(`${this.url}/api/contact/${contact_id}`);
+  }
+  
+  addContact(contactData: any): Observable<AddContact> {
+    return this._http.post<AddContact>(`${this.url}/api/contact`, contactData);
   }
 
 }
