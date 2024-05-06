@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { GetContacts } from '../interfaces/get-contact.interface';
 import { GetContactByID } from '../interfaces/get-contact-by-id.interface';
 import { AddContact } from '../interfaces/add-contact.interface';
+import { DeleteContact } from '../interfaces/delete-contact.interface';
 
 
 @Injectable({
@@ -27,6 +28,10 @@ export class ContactServiceService {
   
   addContact(contactData: any): Observable<AddContact> {
     return this._http.post<AddContact>(`${this.url}/api/contact`, contactData);
+  }
+
+  deleteContact(contact_id:number):Observable<DeleteContact>{
+    return this._http.delete<DeleteContact>(`${this.url}/api/contact/${contact_id}`);
   }
 
 }

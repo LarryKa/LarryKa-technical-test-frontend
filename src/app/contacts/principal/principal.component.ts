@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ContactServiceService } from '../services/contact-service.service';
 import { Contact } from '../interfaces/get-contact.interface';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-principal',
@@ -60,7 +60,28 @@ export class PrincipalComponent {
   }
 
   eliminar(contact_id:number){
-
+    Swal.fire({
+      title: "Quieres eliminar este contacto?",      
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",      
+    }).then((result) => {      
+      if (result.isConfirmed) {
+        this._contactServiceService.deleteContact(contact_id).subscribe({
+          next:({status, code, message}) => {
+            if( status == "success" && code == 200){
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+              this.getContacts();
+            }
+          }
+        })
+      }
+    });    
   }
 
   verDetalle(contact_id:number){    
