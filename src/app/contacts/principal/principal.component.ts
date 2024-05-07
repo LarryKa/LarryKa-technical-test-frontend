@@ -88,6 +88,10 @@ export class PrincipalComponent {
     this._router.navigate([`/contacts/detail/${contact_id}`]);
   }
 
+  actualizar(contact_id:number){
+    this._router.navigate([`/contacts/update/${contact_id}`]);
+  }
+
   add(){
     this._router.navigate([`/contacts/add`]);
   }
