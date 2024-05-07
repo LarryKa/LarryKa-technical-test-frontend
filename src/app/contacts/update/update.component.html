@@ -1,68 +1,82 @@
-<div class="container">
-    <h2 class="text-center mb-4 mt-4">Agregar contacto</h2>
-    <div class="col-8">
-        <form [formGroup]="contactForm" class="mt-4" *ngIf="show" (ngSubmit)="submitForm()">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" formControlName="name" id="name" class="form-control" [class.is-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
-                <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" class="invalid-feedback">
-                    Name is required
+<div class="container mt-2 animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center mb-0">Agregar contacto</h2>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" formControlName="name" id="name" class="form-control" [class.is-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                            <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" class="invalid-feedback">
+                                El nombre es requerido
+                            </div>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="surname" class="form-label">Apellido</label>
+                            <input type="text" formControlName="surname" id="surname" class="form-control" [class.is-invalid]="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched">
+                            <div *ngIf="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched" class="invalid-feedback">
+                                El apellido es requerido
+                            </div>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="city" class="form-label">Ciudad</label>
+                            <input type="text" formControlName="city" id="city" class="form-control" [class.is-invalid]="contactForm.get('city')?.invalid && contactForm.get('city')?.touched">
+                            <div *ngIf="contactForm.get('city')?.invalid && contactForm.get('city')?.touched" class="invalid-feedback">
+                                La ciudad es requerida
+                            </div>
+                        </div>
+                    
+                        <div formArrayName="emails">
+                            <label class="d-block">Emails</label>
+                            <div *ngFor="let email of emailsArray; let i = index" class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" [formControlName]="i" class="form-control" [class.is-invalid]="contactForm.get('emails.' + i)?.invalid && contactForm.get('emails.' + i)?.touched">
+                                    <button type="button" class="btn btn-outline-danger" (click)="removeEmail(i)">Eliminar</button>
+                                    <div *ngIf="contactForm.get('emails.' + i)?.invalid && contactForm.get('emails.' + i)?.touched" class="invalid-feedback">
+                                        Email inválido
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="addEmail()">Agregar Email</button>
+                        </div>
+                    
+                        <div formArrayName="addresses">
+                            <label class="d-block mt-4">Direcciones</label>
+                            <div *ngFor="let address of addressesArray; let i = index" class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" [formControlName]="i" class="form-control" [class.is-invalid]="contactForm.get('addresses.' + i)?.invalid && contactForm.get('addresses.' + i)?.touched">
+                                    <button type="button" class="btn btn-outline-danger" (click)="removeAddress(i)">Eliminar</button>
+                                    <div *ngIf="contactForm.get('addresses.' + i)?.invalid && contactForm.get('addresses.' + i)?.touched" class="invalid-feedback">
+                                        Dirección inválida
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="addAddress()">Agregar Dirección</button>
+                        </div>
+                    
+                        <div formArrayName="phones">
+                            <label class="d-block mt-4">Teléfonos</label>
+                            <div *ngFor="let phone of phonesArray; let i = index" class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" [formControlName]="i" class="form-control" [class.is-invalid]="contactForm.get('phones.' + i)?.invalid && contactForm.get('phones.' + i)?.touched">
+                                    <button type="button" class="btn btn-outline-danger" (click)="removePhone(i)">Eliminar</button>
+                                    <div *ngIf="contactForm.get('phones.' + i)?.invalid && contactForm.get('phones.' + i)?.touched" class="invalid-feedback">
+                                        Número de teléfono inválido
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="addPhone()">Agregar Teléfono</button>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary mt-4" [disabled]="!contactForm.valid">Crear contacto</button>
+                    </form>
                 </div>
             </div>
-          
-            <div class="mb-3">
-                <label for="surname" class="form-label">Surname</label>
-                <input type="text" formControlName="surname" id="surname" class="form-control" [class.is-invalid]="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched">
-                <div *ngIf="contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched" class="invalid-feedback">
-                    Surname is required
-                </div>
-            </div>
-          
-            <div class="mb-3">
-                <label for="city" class="form-label">City</label>
-                <input type="text" formControlName="city" id="city" class="form-control" [class.is-invalid]="contactForm.get('city')?.invalid && contactForm.get('city')?.touched">
-                <div *ngIf="contactForm.get('city')?.invalid && contactForm.get('city')?.touched" class="invalid-feedback">
-                    City is required
-                </div>
-            </div>
-          
-            <div formArrayName="emails" class="mb-3">
-                <label>Emails:</label>
-                <button type="button" (click)="addEmail()" class="btn btn-primary m-3">Agregar Email</button>
-                <div *ngFor="let email of emailsArray; let i = index">
-                    <input type="text" [formControlName]="i" class="form-control mb-3" [class.is-invalid]="contactForm.get('emails')?.get(i.toString())?.invalid && contactForm.get('emails')?.get(i.toString())?.touched">
-                    <button type="button" (click)="removeEmail(i)" class="btn btn-danger mb-2">Eliminar</button>
-                    <div *ngIf="contactForm.get('emails')?.get(i.toString())?.invalid && contactForm.get('emails')?.get(i.toString())?.touched" class="invalid-feedback">
-                        Correo electronico invalido
-                    </div>
-                </div>
-            </div>
-    
-            <div formArrayName="addresses" class="mb-3">
-                <label>Direcciones:</label>
-                <button type="button" (click)="addAddress()" class="btn btn-primary m-3">Add address</button>
-                <div *ngFor="let address of addressesArray; let i = index">
-                    <input type="text" [formControlName]="i" class="form-control mb-3" [class.is-invalid]="contactForm.get('addresses')?.get(i.toString())?.invalid && contactForm.get('addresses')?.get(i.toString())?.touched">
-                    <button type="button" (click)="removeAddress(i)" class="btn btn-danger mb-2">Eliminar</button>
-                    <div *ngIf="contactForm.get('addresses')?.get(i.toString())?.invalid && contactForm.get('addresses')?.get(i.toString())?.touched" class="invalid-feedback">
-                        dirección invalida
-                    </div>
-                </div>
-            </div>
-    
-            <div formArrayName="phones" class="mb-3">
-                <label>Telefonos:</label>
-                <button type="button" (click)="addPhone()" class="btn btn-primary m-3">Add Phone</button>
-                <div *ngFor="let phone of phonesArray; let i = index">
-                    <input type="text" [formControlName]="i" class="form-control mb-3" [class.is-invalid]="contactForm.get('phones')?.get(i.toString())?.invalid && contactForm.get('phones')?.get(i.toString())?.touched">
-                    <button type="button" (click)="removePhone(i)" class="btn btn-danger mb-2">Eliminar</button>
-                    <div *ngIf="contactForm.get('phones')?.get(i.toString())?.invalid && contactForm.get('phones')?.get(i.toString())?.touched" class="invalid-feedback">
-                        Digite un número de 10 digitos
-                    </div>
-                </div>
-            </div>  
-    
-            <button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">Actualizar contacto</button>
-        </form>
-    </div>    
+        </div>
+    </div>
 </div>

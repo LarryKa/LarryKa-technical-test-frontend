@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { ContactServiceService } from '../services/contact-service.service';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from '../interfaces/add-contact.interface';
 
 
@@ -16,7 +16,8 @@ export class AddComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     public _contactServiceService:ContactServiceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _router: Router
   ) { }
 
   contact_id!:number;
@@ -74,6 +75,7 @@ export class AddComponent implements OnInit{
               timer: 1500
             });
             this.contactForm.reset();
+            this._router.navigate(['/contacts']);
           }
         },
         error: (error) => {
