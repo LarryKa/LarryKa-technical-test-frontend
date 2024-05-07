@@ -24,6 +24,7 @@ export class PrincipalComponent {
   }
 
   getContacts():void{
+    this.show = false
     this._contactServiceService.getContacts(this.word, this.currentPage).subscribe({
       next:({code, status, contacts}) => {
         if(code == 200 && status == "success"){
