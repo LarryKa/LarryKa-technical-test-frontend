@@ -6,6 +6,7 @@ import { GetContacts } from '../interfaces/get-contact.interface';
 import { GetContactByID } from '../interfaces/get-contact-by-id.interface';
 import { AddContact } from '../interfaces/add-contact.interface';
 import { DeleteContact } from '../interfaces/delete-contact.interface';
+import { UopdateContact } from '../interfaces/update-contact.interface';
 
 
 @Injectable({
@@ -32,6 +33,10 @@ export class ContactServiceService {
 
   deleteContact(contact_id:number):Observable<DeleteContact>{
     return this._http.delete<DeleteContact>(`${this.url}/api/contact/${contact_id}`);
+  }
+
+  updateContact(contact_id:number, contactData: any):Observable<UopdateContact>{
+    return this._http.put<UopdateContact>(`${this.url}/api/contact/${contact_id}`, contactData);
   }
 
 }

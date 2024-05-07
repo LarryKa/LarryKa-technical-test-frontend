@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { ContactServiceService } from '../services/contact-service.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import { Contact } from '../interfaces/add-contact.interface';
 
 
 @Component({
@@ -13,17 +15,19 @@ export class AddComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    public _contactServiceService:ContactServiceService
+    public _contactServiceService:ContactServiceService,
+    private route: ActivatedRoute
   ) { }
 
+  contact_id!:number;
+  contact!:Contact;
   contactForm!: FormGroup;
   emailsArray: AbstractControl[] = [];
   phonesArray: AbstractControl[] = [];
   addressesArray: AbstractControl[] = [];
   show:boolean = false;
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -81,5 +85,35 @@ export class AddComponent implements OnInit{
         }
       })
     }
+  }
+
+  getContactById():void {
+    this.contact_id = this.route.snapshot.params['contact_id'];
+    if(this.contact != undefined){
+      alert("aqui")
+      this._contactServiceService.getContactById( this.contact_id ).subscribe({
+        next:({status, code, contact}) => {
+          if( status == "success" && code == 200) {
+            this.contact = contact;
+            this.show = true;
+          }
+        }
+      })
+    }        
+  }
+
+  removeEmail(index: number) {
+    const emailsArray = this.contactForm.get('emails') as FormArray;
+    emailsArray.removeAt(index);
+  }
+
+  removePhone(index: number) {
+    const phonesArray = this.contactForm.get('phones') as FormArray;
+    phonesArray.removeAt(index);
+  }
+
+  removeAddress(index: number) {
+    const addressArray = this.contactForm.get('addresses') as FormArray;
+    addressArray.removeAt(index);
   }
 }
